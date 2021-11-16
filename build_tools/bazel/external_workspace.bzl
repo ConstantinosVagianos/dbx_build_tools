@@ -11,7 +11,7 @@ DEFAULT_EXTERNAL_URLS = {
     "com_github_plougher_squashfs_tools": ["https://github.com/plougher/squashfs-tools/archive/4.4.tar.gz"],
     "cpython_27": ["https://www.python.org/ftp/python/2.7.17/Python-2.7.17.tar.xz"],
     "cpython_38": ["https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tar.xz"],
-    "go_1_16_5_linux_amd64_tar_gz": ["https://dl.google.com/go/go1.16.5.linux-amd64.tar.gz"],
+    "go_1_16_7_linux_amd64_tar_gz": ["https://dl.google.com/go/go1.16.7.linux-amd64.tar.gz"],
     "io_pypa_pip_whl": ["https://files.pythonhosted.org/packages/54/0c/d01aa759fdc501a58f431eb594a17495f15b88da142ce14b5845662c13f3/pip-20.0.2-py2.py3-none-any.whl"],
     "io_pypa_setuptools_whl": ["https://files.pythonhosted.org/packages/f9/d3/955738b20d3832dfa3cd3d9b07e29a8162edb480bf988332f5e6e48ca444/setuptools-44.0.0-py2.py3-none-any.whl"],
     "io_pypa_wheel_whl": ["https://files.pythonhosted.org/packages/8c/23/848298cccf8e40f5bbb59009b32848a4c38f4e7f3364297ab3c3e2e2cd14/wheel-0.34.2-py2.py3-none-any.whl"],
@@ -20,7 +20,7 @@ DEFAULT_EXTERNAL_URLS = {
     "org_bzip_bzip2": ["https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz"],
     "org_gnu_ncurses": ["https://invisible-mirror.net/archives/ncurses/ncurses-6.2.tar.gz"],
     "org_gnu_readline": ["https://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz"],
-    "org_openssl": ["https://www.openssl.org/source/openssl-1.1.1k.tar.gz"],
+    "org_openssl": ["https://www.openssl.org/source/openssl-1.1.1l.tar.gz"],
     "org_sourceware_libffi": ["https://github.com/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz"],
     "org_sqlite": ["https://sqlite.org/2021/sqlite-amalgamation-3360000.zip"],
     "org_tukaani": ["https://downloads.sourceforge.net/project/lzmautils/xz-5.2.5.tar.xz"],
@@ -31,11 +31,10 @@ DEFAULT_EXTERNAL_URLS = {
 }
 
 def drte_deps(urls = DEFAULT_EXTERNAL_URLS):
-
     http_archive(
-        name = "go_1_16_5_linux_amd64_tar_gz",
-        urls = urls["go_1_16_5_linux_amd64_tar_gz"],
-        sha256 = "b12c23023b68de22f74c0524f10b753e7b08b1504cb7e417eccebdd3fae49061",
+        name = "go_1_16_7_linux_amd64_tar_gz",
+        urls = urls["go_1_16_7_linux_amd64_tar_gz"],
+        sha256 = "7fe7a73f55ba3e2285da36f8b085e5c0159e9564ef5f63ee0ed6b818ade8ef04",
         build_file = filename_from_label("//build_tools/go:BUILD.go-dist"),
     )
 
@@ -146,8 +145,8 @@ def cpython_deps(urls = DEFAULT_EXTERNAL_URLS):
     http_archive(
         name = "org_openssl",
         urls = urls["org_openssl"],
-        sha256 = "892a0875b9872acd04a9fde79b1f943075d5ea162415de3047c327df33fbaee5",
-        strip_prefix = "openssl-1.1.1k",
+        sha256 = "0b7a3e5e59c34827fe0c3a74b7ec8baef302b98fa80088d7f9153aa16fa76bd1",
+        strip_prefix = "openssl-1.1.1l",
         build_file = filename_from_label("//thirdparty/openssl:BUILD.openssl"),
     )
 

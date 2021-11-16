@@ -60,9 +60,23 @@ dbx_py_library(
     ],
 )
 
+dbx_py_library(
+    name = "build_parser_lib",
+    srcs = [
+        "build_parser.py",
+    ],
+    # This must not have further dependencies.
+    autogen_deps = False,
+    python2_compatible = True,
+    python3_compatible = True,
+    validate = "strict",
+    deps = ["//pip/typing"],
+)
+
 dbx_py_pytest_test(
     name = "build_parser_tests",
     srcs = ["build_parser_tests.py"],
+    python2_compatible = True,
     deps = [
         ":build_parser_lib",
     ],
@@ -111,7 +125,7 @@ dbx_py_library(
     srcs = ["whatpyver.py"],
     # This must not have further dependencies.
     autogen_deps = False,
-    python2_compatible = True,
+    python2_compatible = False,
     validate = "strict",
     deps = [":build_parser_lib"],
 )
@@ -249,15 +263,6 @@ dbx_py_dbx_test(
         ":bazel_utils",
         "@dbx_build_tools//pip/pytest",
     ],
-)
-
-py_library(
-    name = "build_parser_lib",
-    srcs = [
-        "build_parser.py",
-    ],
-    # This must not have further dependencies.
-    deps = [],
 )
 
 dbx_sh_binary(

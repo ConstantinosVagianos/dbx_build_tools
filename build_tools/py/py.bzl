@@ -68,13 +68,18 @@ def _get_build_interpreters_for_target(ctx):
 # Placeholder text which gets replaced with base/root directory where action is executed.
 ROOT_PLACEHOLDER = "____root____"
 
+# In rare cases, we must refer to the absolute path to the build directory where the wheel is built.
+# Similarly to `$(ROOT)`, we can use `$(BUILDROOT)` to refer to this directly which is replaced in vpip.
+# Only applies to environment variables.
+BUILDROOT_PLACEHOLDER = "____buildroot____"
+
 def _add_vpip_compiler_args(ctx, cc_toolchain, copts, conly, args):
     # Set the compiler to the crosstool compilation driver.
     feature_configuration = cc_common.configure_features(
         ctx = ctx,
         cc_toolchain = cc_toolchain,
         requested_features = ctx.features,
-        unsupported_features = ctx.disabled_features,
+        unsupported_features = ctx.disabled_features + ["thin_lto"],
     )
     c_compiler = cc_common.get_tool_for_action(
         feature_configuration = feature_configuration,
@@ -312,6 +317,7 @@ def _build_wheel(ctx, wheel, python_interp, sdist_tar):
     for e in ctx.attr.env:
         env[e] = ctx.expand_make_variables("cmd", ctx.expand_location(ctx.attr.env[e], targets = ctx.attr.tools), {
             "ROOT": ROOT_PLACEHOLDER,
+            "BUILDROOT": BUILDROOT_PLACEHOLDER,
             "GENFILES_ROOT": ROOT_PLACEHOLDER + "/" + genfiles_root,
         })
 
@@ -319,6 +325,7 @@ def _build_wheel(ctx, wheel, python_interp, sdist_tar):
         command_args.add("--index-url", PYPI_MIRROR_URL)
 
     command_args.add(ROOT_PLACEHOLDER, format = "--root-placeholder=%s")
+    command_args.add(BUILDROOT_PLACEHOLDER, format = "--buildroot-placeholder=%s")
 
     if not ctx.attr.ignore_missing_static_libraries and not allow_dynamic_links(ctx):
         fail("May not disable ignore_missing_static_libraries when dynamic links are not allowed.")

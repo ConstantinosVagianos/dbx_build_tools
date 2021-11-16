@@ -3,13 +3,19 @@
 
 load("//build_tools/go:go.bzl", "dbx_go_library")
 
+# This library must not be imported directly, as it is being deprecated,
+# and eventually removed. Please look for helpers in go/src/dropbox/protobuf/jsonpb
 dbx_go_library(
     name = "jsonpb",
     srcs = [
         "jsonpb.go",
     ],
     visibility = [
-        "//go/src:__subpackages__",
+        "//go/src/dropbox/protobuf:__subpackages__",
+        "//go/src/github.com:__subpackages__",
+        "//go/src/go.etcd.io:__subpackages__",
+        "//go/src/go.opentelemetry.io:__subpackages__",
+        "//go/src/k8s.io:__subpackages__",
     ],
     deps = [
         "//go/src/github.com/gogo/protobuf/proto",
