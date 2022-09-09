@@ -616,7 +616,7 @@ _local_piplib_attrs.update({
     "pip_version": attr.string(),
     "setup_requires": attr.label_list(providers = ["piplib_contents", DbxPyVersionCompatibility]),
     "tools": attr.label_list(cfg = "host"),
-    "_tar_tool": attr.label(default = Label("@rules_pkg//:build_tar"), cfg = "host", executable = True),
+    "_tar_tool": attr.label(default = Label("@rules_pkg//pkg/private:build_tar"), cfg = "host", executable = True),
 })
 
 dbx_py_local_piplib_internal = rule(
